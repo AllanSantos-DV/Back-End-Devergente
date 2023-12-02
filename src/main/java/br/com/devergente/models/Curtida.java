@@ -6,31 +6,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "comentario")
-public class Comment {
+@Table(name = "curtida")
+public class Curtida {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "conteudo")
-    private String conteudo;
-
-    @Column(name = "data_criacao")
-    private Date data;
+    @Column(name = "total_curtidas")
+    private Integer total_curtidas;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private User usuario;
+    private User user;
 
     @ManyToOne
-    @JoinColumn(name = "id_postagem")
     private Postagem postagem;
 }
