@@ -1,6 +1,7 @@
 package br.com.devergente.models;
 
-import br.com.devergente.models.users.User;
+import br.com.devergente.models.users.UsersDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,9 +22,36 @@ public class Curtida {
     @Column(name = "total_curtidas")
     private Integer total_curtidas;
 
-    @ManyToOne
-    private User user;
+    // relacionamentos
 
     @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private UsersDTO usuario;
+
+    @ManyToOne
+    @JsonBackReference(value = "postagem-curtida")
     private Postagem postagem;
+
+    @Override
+    public String toString() {
+        return "Curtida{" +
+                "id=" + id +
+                ", total_curtidas=" + total_curtidas +
+                ", usuario{" +
+                "id=" + usuario.getId() +
+                ", nome='" + usuario.getNome() + '\'' +
+                ", username='" + usuario.getUsername() + '\'' +
+                ", img_perfil='" + usuario.getImg_perfil() + '\'' +
+                "}, postagem{" +
+                "id=" + postagem.getId() +
+                ", conteudo='" + postagem.getConteudo() + '\'' +
+                ", data_criacao=" + postagem.getData() +
+                ", total_curtidas=" + postagem.getCurtidas() +
+                ", total_comentarios=" + postagem.getComentarios() +
+                ", usuario{" +
+                "id=" + postagem.getUsuario().getId() +
+                ", nome='" + postagem.getUsuario().getNome() + '\'' +
+                ", username='" + postagem.getUsuario().getUsername() + '\'' +
+                "}}";
+    }
 }

@@ -3,12 +3,15 @@ package br.com.devergente.models.users;
 import br.com.devergente.models.Comment;
 import br.com.devergente.models.Endereco;
 import br.com.devergente.models.Postagem;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "usuario")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
     @Id
@@ -30,10 +34,10 @@ public class User {
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "senha")
+    @Column(name = "senha", nullable = false)
     private String senha;
 
     @Column(name = "data_nascimento", nullable = false)
@@ -57,36 +61,49 @@ public class User {
     @Column(name = "bio")
     private String bio;
 
+    // relacionamentos
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
+    @JsonManagedReference("user-endereco")
     private Endereco endereco;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("user-neuro")
     private Neurodivergent neurodivergent;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("user-familiar")
     private Familiar familiar;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("user-professional")
     private Professional professional;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("user-employer")
     private Employer employer;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Postagem> postagens;
-
-    @ManyToMany
-    @JoinTable(
-            name = "usuario_postagem_curtida",
-            joinColumns = @JoinColumn(name = "id_usuario"),
-            inverseJoinColumns = @JoinColumn(name = "id_postagem"))
-    private List<Postagem> postagens_curtidas;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Comment> comentarios;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", data_nascimento=" + data_nascimento +
+                ", tipo_perfil=" + tipo_perfil +
+                ", codigo=" + codigo +
+                ", cnpj='" + cnpj + '\'' +
+                ", img_perfil='" + img_perfil + '\'' +
+                ", img_capa='" + img_capa + '\'' +
+                ", bio='" + bio + '\'' +
+                ", endereco=" + endereco.getId() +
+                ", neurodivergent=" + neurodivergent.getId() +
+                ", familiar=" + familiar.getId() +
+                ", professional=" + professional.getId() +
+                ", employer=" + employer.getId() +
+                '}';
+    }
 }

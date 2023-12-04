@@ -1,6 +1,10 @@
 package br.com.devergente.models;
 
 import br.com.devergente.models.users.User;
+import br.com.devergente.models.users.UsersDTO;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,15 +18,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "postagem")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Postagem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
-    @Column(name = "titulo")
-    private String titulo;
 
     @Column(name = "conteudo")
     private String conteudo;
@@ -33,16 +35,39 @@ public class Postagem {
     @Column(name = "imagem_url", columnDefinition = "varchar(255) default 'https://i.imgur.com/2ZtU6O2.png'")
     private String imagemUrl;
 
+    // relacionamentos
+
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    private User usuario;
+    private UsersDTO usuario;
 
     @OneToMany(mappedBy = "postagem")
+    @JsonManagedReference("postagem-curtida")
     private List<Curtida> curtidas;
 
     @OneToMany(mappedBy = "postagem")
+    @JsonManagedReference("postagem-comentario")
     private List<Comment> comentarios;
 
     @ManyToMany(mappedBy = "postagens_curtidas")
-    private List<User> usuarios_curtiram;
+    private List<UsersDTO> usuarios_curtiram;
+
+    @Override
+    public String toString() {
+        return "Postagem{" +
+                "id=" + id +
+                ", conteudo='" + conteudo + '\'' +
+                ", data=" + data +
+                ", imagemUrl='" + imagemUrl + '\'' +
+                ", usuario{" +
+                "id=" + usuario.getId() +
+                ", nome='" + usuario.getNome() + '\'' +
+                ", username='" + usuario.getUsername() + '\'' +
+                ", img_perfil='" + usuario.getImg_perfil() + '\'' +
+                "}" +
+                ", curtidas=" + curtidas +
+                ", comentarios=" + comentarios +
+                ", usuarios_curtiram=" + usuarios_curtiram +
+                '}';
+    }
 }

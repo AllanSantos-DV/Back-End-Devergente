@@ -3,6 +3,7 @@ package br.com.devergente.models;
 import br.com.devergente.models.users.Employer;
 import br.com.devergente.models.users.Neurodivergent;
 import br.com.devergente.models.users.Professional;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -59,10 +60,48 @@ public class Curriculum {
     @Column(name = "resumo")
     private String resumo;
 
-    @OneToOne
-    @JoinColumn(name = "neurodivergente_usuario_id")
+    // relacionamentos
+
+    @OneToOne(mappedBy = "curriculum")
+    @JsonBackReference(value = "neuro-curriculo")
     private Neurodivergent neurodivergent;
 
     @ManyToMany(mappedBy = "curriculos")
     private List<Employer> empregadores;
+
+    @Override
+    public String toString() {
+        return "Curriculum{" +
+                "id=" + id +
+                ", tel01='" + tel01 + '\'' +
+                ", tel02='" + tel02 + '\'' +
+                ", area_interesse='" + area_interesse + '\'' +
+                ", habilidades='" + habilidades + '\'' +
+                ", formacao='" + formacao + '\'' +
+                ", instituicao_ensino='" + instituicao_ensino + '\'' +
+                ", experiencia_anterior=" + experiencia_anterior +
+                ", cargo='" + cargo + '\'' +
+                ", empresa='" + empresa + '\'' +
+                ", data_inicio=" + data_inicio +
+                ", data_fim=" + data_fim +
+                ", resumo='" + resumo + '\'' +
+                ", neurodivergent{" +
+                "id=" + neurodivergent.getId() +
+                ", laudo='" + neurodivergent.getLaudo() + '\'' +
+                ", tipo_neurodivergencia=" + neurodivergent.getTipo_neurodivergencia() +
+                ", usuario{" +
+                "id=" + neurodivergent.getUsuario().getId() +
+                ", nome='" + neurodivergent.getUsuario().getNome() + '\'' +
+                ", username='" + neurodivergent.getUsuario().getUsername() + '\'' +
+                ", email='" + neurodivergent.getUsuario().getEmail() + '\'' +
+                ", senha='" + neurodivergent.getUsuario().getSenha() + '\'' +
+                ", data_nascimento=" + neurodivergent.getUsuario().getData_nascimento() +
+                ", tipo_perfil=" + neurodivergent.getUsuario().getTipo_perfil() +
+                ", codigo=" + neurodivergent.getUsuario().getCodigo() +
+                ", cnpj='" + neurodivergent.getUsuario().getCnpj() + '\'' +
+                ", img_perfil='" + neurodivergent.getUsuario().getImg_perfil() + '\'' +
+                ", img_capa='" + neurodivergent.getUsuario().getImg_capa() + '\'' +
+                ", bio='" + neurodivergent.getUsuario().getBio() + '\'' +
+                "}}";
+    }
 }

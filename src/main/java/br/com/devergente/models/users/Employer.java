@@ -3,6 +3,7 @@ package br.com.devergente.models.users;
 import br.com.devergente.models.Curriculum;
 import br.com.devergente.models.Vaga;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,10 +25,12 @@ public class Employer {
     @Column(name = "cnpj")
     private String cnpj;
 
+    // relacionamentos
+
     @OneToOne
     @MapsId
     @JoinColumn(name = "id_usuario")
-    @JsonBackReference
+    @JsonBackReference(value = "user-employer")
     private User usuario;
 
     @ManyToMany
@@ -38,5 +41,27 @@ public class Employer {
     private List<Curriculum> curriculos;
 
     @OneToMany(mappedBy = "empregador")
+    @JsonManagedReference("empregador-vaga")
     private List<Vaga> vagas;
+
+    @Override
+    public String toString() {
+        return "Employer{" +
+                "id=" + id +
+                ", cnpj='" + cnpj + '\'' +
+                ", usuario{" +
+                "id=" + usuario.getId() +
+                ", nome='" + usuario.getNome() + '\'' +
+                ", username='" + usuario.getUsername() + '\'' +
+                ", email='" + usuario.getEmail() + '\'' +
+                ", senha='" + usuario.getSenha() + '\'' +
+                ", data_nascimento=" + usuario.getData_nascimento() +
+                ", tipo_perfil=" + usuario.getTipo_perfil() +
+                ", codigo=" + usuario.getCodigo() +
+                ", cnpj='" + usuario.getCnpj() + '\'' +
+                ", img_perfil='" + usuario.getImg_perfil() + '\'' +
+                ", img_capa='" + usuario.getImg_capa() + '\'' +
+                ", bio='" + usuario.getBio() + '\'' +
+                "}}";
+    }
 }
