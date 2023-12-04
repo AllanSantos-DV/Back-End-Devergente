@@ -24,8 +24,6 @@ Para instalar o projeto, siga estas etapas:
 
 Lembre-se de que o Docker deve estar instalado e funcionando, pois o banco de dados será criado no Docker.
 
-Você também pode rodar a aplicação via terminal na pasta raiz do projeto usando `docker compose up`.
-
 ## Uso
 
 O servidor abrirá no localhost:8080 por padrão. Você pode usar um programa como o Postman ou Insomnia para testar os endpoints.
