@@ -1,7 +1,6 @@
 package br.com.devergente.models;
 
-import br.com.devergente.models.users.User;
-import br.com.devergente.models.users.UsersDTO;
+import br.com.devergente.models.usuarios.UsuarioDTO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -39,7 +38,7 @@ public class Postagem {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    private UsersDTO usuario;
+    private UsuarioDTO usuario;
 
     @OneToMany(mappedBy = "postagem")
     @JsonManagedReference("postagem-curtida")
@@ -47,10 +46,10 @@ public class Postagem {
 
     @OneToMany(mappedBy = "postagem")
     @JsonManagedReference("postagem-comentario")
-    private List<Comment> comentarios;
+    private List<Comentario> comentarios;
 
     @ManyToMany(mappedBy = "postagens_curtidas")
-    private List<UsersDTO> usuarios_curtiram;
+    private List<UsuarioDTO> usuarios_curtiram;
 
     @Override
     public String toString() {

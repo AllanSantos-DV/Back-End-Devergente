@@ -1,7 +1,6 @@
 package br.com.devergente.models;
 
-import br.com.devergente.models.users.User;
-import br.com.devergente.models.users.UsersDTO;
+import br.com.devergente.models.usuarios.UsuarioDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "comentario")
-public class Comment {
+public class Comentario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +31,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    private UsersDTO usuario;
+    private UsuarioDTO usuario;
 
     @ManyToOne
     @JoinColumn(name = "id_postagem")
@@ -41,7 +40,7 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "Comment{" +
+        return "Comentario{" +
                 "id=" + id +
                 ", conteudo='" + conteudo + '\'' +
                 ", data=" + data +

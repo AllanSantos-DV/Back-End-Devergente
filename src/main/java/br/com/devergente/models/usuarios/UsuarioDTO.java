@@ -1,7 +1,7 @@
-package br.com.devergente.models.users;
+package br.com.devergente.models.usuarios;
 
 
-import br.com.devergente.models.Comment;
+import br.com.devergente.models.Comentario;
 import br.com.devergente.models.Curtida;
 import br.com.devergente.models.Postagem;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -19,9 +19,9 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "usuarioDTO")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class UsersDTO {
+public class UsuarioDTO {
 
-    public UsersDTO(Integer id, String nome, String username, String img_perfil, String email) {
+    public UsuarioDTO(Integer id, String nome, String username, String img_perfil, String email) {
         this.id = id;
         this.nome = nome;
         this.username = username;
@@ -52,7 +52,7 @@ public class UsersDTO {
     private List<Curtida> curtidas;
 
     @OneToMany(mappedBy = "usuario")
-    private List<Comment> comentarios;
+    private List<Comentario> comentarios;
 
     @ManyToMany
     @JoinTable(
@@ -60,4 +60,15 @@ public class UsersDTO {
             joinColumns = @JoinColumn(name = "id_usuario"),
             inverseJoinColumns = @JoinColumn(name = "id_postagem"))
     private List<Postagem> postagens_curtidas;
+
+    @Override
+    public String toString() {
+        return "UsuarioDTO{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", username='" + username + '\'' +
+                ", img_perfil='" + img_perfil + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

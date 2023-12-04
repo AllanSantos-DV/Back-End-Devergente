@@ -1,8 +1,7 @@
 package br.com.devergente.models;
 
-import br.com.devergente.models.users.Employer;
-import br.com.devergente.models.users.Neurodivergent;
-import br.com.devergente.models.users.User;
+import br.com.devergente.models.usuarios.Empregador;
+import br.com.devergente.models.usuarios.Neurodivergent;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -50,7 +49,7 @@ public class Vaga {
     @ManyToOne
     @JoinColumn(name = "id_empregador")
     @JsonBackReference(value = "empregador-vaga")
-    private Employer empregador;
+    private Empregador empregador;
 
     @ManyToMany(mappedBy = "vagas")
     private List<Neurodivergent> neurodivergentes;

@@ -1,38 +1,53 @@
-package br.com.devergente.models.users;
+package br.com.devergente.models.usuarios;
 
+import br.com.devergente.models.Curriculum;
+import br.com.devergente.models.Vaga;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "familiar")
-public class Familiar {
+@Table(name = "empregador")
+public class Empregador {
 
     @Id
     private Integer id;
 
-    @Column(name = "tipo_familiar")
-    private int tipo_familiar;
+    @Column(name = "cnpj")
+    private String cnpj;
 
     // relacionamentos
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "id_usuario")
-    @JsonBackReference(value = "user-familiar")
-    private User usuario;
+    @JsonBackReference(value = "user-employer")
+    private Usuario usuario;
+
+    @ManyToMany
+    @JoinTable(
+            name = "empregador_curriculo",
+            joinColumns = @JoinColumn(name = "id_empregador"),
+            inverseJoinColumns = @JoinColumn(name = "id_curriculo"))
+    private List<Curriculum> curriculos;
+
+    @OneToMany(mappedBy = "empregador")
+    @JsonManagedReference("empregador-vaga")
+    private List<Vaga> vagas;
 
     @Override
     public String toString() {
-        return "Familiar{" +
+        return "Empregador{" +
                 "id=" + id +
-                ", tipo_familiar=" + tipo_familiar +
+                ", cnpj='" + cnpj + '\'' +
                 ", usuario{" +
                 "id=" + usuario.getId() +
                 ", nome='" + usuario.getNome() + '\'' +

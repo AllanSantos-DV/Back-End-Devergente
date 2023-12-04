@@ -1,4 +1,4 @@
-package br.com.devergente.models.users;
+package br.com.devergente.models.usuarios;
 
 import br.com.devergente.models.Curriculum;
 import br.com.devergente.models.Vaga;
@@ -7,48 +7,52 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "empregador")
-public class Employer {
+@Entity
+@Table(name = "neurodivergente")
+public class Neurodivergent {
 
     @Id
     private Integer id;
 
-    @Column(name = "cnpj")
-    private String cnpj;
+    @Column(name = "laudo_neurodivergente")
+    private String laudo;
+
+    @Column(name = "tipo_neurodivergencia")
+    private int tipo_neurodivergencia;
 
     // relacionamentos
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "id_usuario")
-    @JsonBackReference(value = "user-employer")
-    private User usuario;
+    @JsonBackReference(value = "user-neuro")
+    private Usuario usuario;
 
     @ManyToMany
     @JoinTable(
-            name = "empregador_curriculo",
-            joinColumns = @JoinColumn(name = "id_empregador"),
-            inverseJoinColumns = @JoinColumn(name = "id_curriculo"))
-    private List<Curriculum> curriculos;
-
-    @OneToMany(mappedBy = "empregador")
-    @JsonManagedReference("empregador-vaga")
+            name = "neurodivergente_vaga",
+            joinColumns = @JoinColumn(name = "id_neurodivergente"),
+            inverseJoinColumns = @JoinColumn(name = "id_vaga"))
     private List<Vaga> vagas;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "curriculum_id", referencedColumnName = "id")
+    @JsonManagedReference("neuro-curriculo")
+    private Curriculum curriculum;
 
     @Override
     public String toString() {
-        return "Employer{" +
+        return "Neurodivergent{" +
                 "id=" + id +
-                ", cnpj='" + cnpj + '\'' +
+                ", laudo='" + laudo + '\'' +
+                ", tipo_neurodivergencia=" + tipo_neurodivergencia +
                 ", usuario{" +
                 "id=" + usuario.getId() +
                 ", nome='" + usuario.getNome() + '\'' +

@@ -22,16 +22,16 @@ public class PostagensServices {
     @Autowired
     private PostagensRepository postagensRepository;
 
-    public void create() {
-        // Implemente a lógica para criar uma postagem aqui
+    public Postagem save(Postagem postagem) {
+        return postagensRepository.save(postagem);
     }
 
     public void update() {
-        // Implemente a lógica para atualizar uma postagem aqui
+        // TODO document why this method is empty
     }
 
     public void delete() {
-        // Implemente a lógica para deletar uma postagem aqui
+        // TODO document why this method is empty
     }
 
 
@@ -39,11 +39,5 @@ public class PostagensServices {
         Pageable pageable = PageRequest.of(page, size);
         Page<Postagem> postagens = postagensRepository.findAll(pageable);
         return postagens.stream().toList();
-
-    }
-
-
-    public Postagem save(Postagem postagem) {
-        return postagensRepository.save(postagem);
     }
 }

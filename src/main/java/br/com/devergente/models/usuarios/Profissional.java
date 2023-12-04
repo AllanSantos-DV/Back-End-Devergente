@@ -1,10 +1,9 @@
-package br.com.devergente.models.users;
+package br.com.devergente.models.usuarios;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "professional")
-public class Professional {
+public class Profissional {
 
     @Id
     private Integer id;
@@ -29,11 +28,11 @@ public class Professional {
     @MapsId
     @JoinColumn(name = "id_usuario")
     @JsonBackReference(value = "user-professional")
-    private User usuario;
+    private Usuario usuario;
 
     @Override
     public String toString() {
-        return "Professional{" +
+        return "Profissional{" +
                 "id=" + id +
                 ", registro_profissional='" + registro_profissional + '\'' +
                 ", tipo_profissional=" + tipo_profissional +

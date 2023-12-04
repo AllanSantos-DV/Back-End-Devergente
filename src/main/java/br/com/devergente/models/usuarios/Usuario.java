@@ -1,8 +1,6 @@
-package br.com.devergente.models.users;
+package br.com.devergente.models.usuarios;
 
-import br.com.devergente.models.Comment;
 import br.com.devergente.models.Endereco;
-import br.com.devergente.models.Postagem;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -11,9 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "usuario")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class User {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,16 +73,16 @@ public class User {
     private Familiar familiar;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference("user-professional")
-    private Professional professional;
+    @JsonManagedReference("user-profissional")
+    private Profissional profissional;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference("user-employer")
-    private Employer employer;
+    @JsonManagedReference("user-empregador")
+    private Empregador empregador;
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Usuario{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", username='" + username + '\'' +
@@ -102,8 +98,8 @@ public class User {
                 ", endereco=" + endereco.getId() +
                 ", neurodivergent=" + neurodivergent.getId() +
                 ", familiar=" + familiar.getId() +
-                ", professional=" + professional.getId() +
-                ", employer=" + employer.getId() +
+                ", profissional=" + profissional.getId() +
+                ", empregador=" + empregador.getId() +
                 '}';
     }
 }

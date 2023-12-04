@@ -1,6 +1,6 @@
 package br.com.devergente.models;
 
-import br.com.devergente.models.users.User;
+import br.com.devergente.models.usuarios.Usuario;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -47,7 +47,7 @@ public class Endereco {
 
     @OneToOne(mappedBy = "endereco")
     @JsonBackReference(value = "user-endereco")
-    private User usuario;
+    private Usuario usuario;
 
     @Override
     public String toString() {

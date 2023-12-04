@@ -1,60 +1,37 @@
-package br.com.devergente.models.users;
+package br.com.devergente.models.usuarios;
 
-import br.com.devergente.enuns.EnunsNeuro;
-import br.com.devergente.models.Curriculum;
-import br.com.devergente.models.Vaga;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "neurodivergente")
-public class Neurodivergent {
+@Table(name = "familiar")
+public class Familiar {
 
     @Id
     private Integer id;
 
-    @Column(name = "laudo_neurodivergente")
-    private String laudo;
-
-    @Column(name = "tipo_neurodivergencia")
-    private int tipo_neurodivergencia;
+    @Column(name = "tipo_familiar")
+    private int tipo_familiar;
 
     // relacionamentos
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "id_usuario")
-    @JsonBackReference(value = "user-neuro")
-    private User usuario;
-
-    @ManyToMany
-    @JoinTable(
-            name = "neurodivergente_vaga",
-            joinColumns = @JoinColumn(name = "id_neurodivergente"),
-            inverseJoinColumns = @JoinColumn(name = "id_vaga"))
-    private List<Vaga> vagas;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "curriculum_id", referencedColumnName = "id")
-    @JsonManagedReference("neuro-curriculo")
-    private Curriculum curriculum;
+    @JsonBackReference(value = "user-familiar")
+    private Usuario usuario;
 
     @Override
     public String toString() {
-        return "Neurodivergent{" +
+        return "Familiar{" +
                 "id=" + id +
-                ", laudo='" + laudo + '\'' +
-                ", tipo_neurodivergencia=" + tipo_neurodivergencia +
+                ", tipo_familiar=" + tipo_familiar +
                 ", usuario{" +
                 "id=" + usuario.getId() +
                 ", nome='" + usuario.getNome() + '\'' +

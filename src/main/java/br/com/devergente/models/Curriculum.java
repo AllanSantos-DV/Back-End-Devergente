@@ -1,8 +1,7 @@
 package br.com.devergente.models;
 
-import br.com.devergente.models.users.Employer;
-import br.com.devergente.models.users.Neurodivergent;
-import br.com.devergente.models.users.Professional;
+import br.com.devergente.models.usuarios.Empregador;
+import br.com.devergente.models.usuarios.Neurodivergent;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -67,7 +66,7 @@ public class Curriculum {
     private Neurodivergent neurodivergent;
 
     @ManyToMany(mappedBy = "curriculos")
-    private List<Employer> empregadores;
+    private List<Empregador> empregadores;
 
     @Override
     public String toString() {

@@ -1,6 +1,6 @@
 package br.com.devergente.models;
 
-import br.com.devergente.models.users.UsersDTO;
+import br.com.devergente.models.usuarios.UsuarioDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class Curtida {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    private UsersDTO usuario;
+    private UsuarioDTO usuario;
 
     @ManyToOne
     @JsonBackReference(value = "postagem-curtida")

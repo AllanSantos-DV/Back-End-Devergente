@@ -1,7 +1,7 @@
 package br.com.devergente.services;
 
 import br.com.devergente.enuns.EnunsUsers;
-import br.com.devergente.models.users.*;
+import br.com.devergente.models.usuarios.*;
 import br.com.devergente.repository.UsersDTORepository;
 import br.com.devergente.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,35 +22,35 @@ public class UserServices {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public User create(User user) {
-        if (usersRepository.findByEmail(user.getEmail()) != null) return null;
-        user.setSenha(passwordEncoder.encode(user.getSenha()));
+    public Usuario create(Usuario usuario) {
+        if (usersRepository.findByEmail(usuario.getEmail()) != null) return null;
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 
-        switch (EnunsUsers.values()[user.getTipo_perfil() - 1]) {
-            case NEURODIVERGENTE -> createNeurodivergent(user);
-            case FAMILIAR-> createFamiliar(user);
-            case PROFISSIONAL-> createProfessional(user);
-            case EMPREGADOR-> createEmployer(user);
+        switch (EnunsUsers.values()[usuario.getTipo_perfil() - 1]) {
+            case NEURODIVERGENTE -> createNeurodivergent(usuario);
+            case FAMILIAR-> createFamiliar(usuario);
+            case PROFISSIONAL-> createProfessional(usuario);
+            case EMPREGADOR-> createEmployer(usuario);
         }
-        usersRepository.save(user);
-        UsersDTO usersDTO = new UsersDTO(user.getId(), user.getNome(), user.getUsername(), user.getImg_perfil(), user.getEmail());
-        usersDTORepository.save(usersDTO);
-        return user;
+        usersRepository.save(usuario);
+        UsuarioDTO usuarioDTO = new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getUsername(), usuario.getImg_perfil(), usuario.getEmail());
+        usersDTORepository.save(usuarioDTO);
+        return usuario;
     }
 
     public void update() {
-        // Implemente a lógica para atualizar um usuário aqui
+        // TODO document why this method is empty
     }
 
     public void delete() {
-        // Implemente a lógica para deletar um usuário aqui
+        // TODO document why this method is empty
     }
 
     public void list() {
-        // Implemente a lógica para listar os usuários aqui
+        // TODO document why this method is empty
     }
 
-    public UsersDTO findById(Integer id) {
+    public UsuarioDTO findById(Integer id) {
         return Optional.of(usersDTORepository.findById(id))
                 .get().orElse( null);
     }
@@ -61,31 +61,31 @@ public class UserServices {
                 .isPresent();
     }
 
-    private void createNeurodivergent(User user) {
+    private void createNeurodivergent(Usuario usuario) {
         Neurodivergent neurodivergent = new Neurodivergent();
-        neurodivergent.setUsuario(user);
-        neurodivergent.setTipo_neurodivergencia(user.getCodigo());
-        user.setNeurodivergent(neurodivergent);
+        neurodivergent.setUsuario(usuario);
+        neurodivergent.setTipo_neurodivergencia(usuario.getCodigo());
+        usuario.setNeurodivergent(neurodivergent);
     }
 
-    private void createFamiliar(User user) {
+    private void createFamiliar(Usuario usuario) {
         Familiar familiar = new Familiar();
-        familiar.setUsuario(user);
-        familiar.setTipo_familiar(user.getCodigo());
-        user.setFamiliar(familiar);
+        familiar.setUsuario(usuario);
+        familiar.setTipo_familiar(usuario.getCodigo());
+        usuario.setFamiliar(familiar);
     }
 
-    private void createProfessional(User user) {
-        Professional professional = new Professional();
-        professional.setUsuario(user);
-        professional.setTipo_profissional(user.getCodigo());
-        user.setProfessional(professional);
+    private void createProfessional(Usuario usuario) {
+        Profissional profissional = new Profissional();
+        profissional.setUsuario(usuario);
+        profissional.setTipo_profissional(usuario.getCodigo());
+        usuario.setProfissional(profissional);
     }
 
-    private void createEmployer(User user) {
-        Employer employer = new Employer();
-        employer.setUsuario(user);
-        employer.setCnpj(user.getCnpj());
-        user.setEmployer(employer);
+    private void createEmployer(Usuario usuario) {
+        Empregador empregador = new Empregador();
+        empregador.setUsuario(usuario);
+        empregador.setCnpj(usuario.getCnpj());
+        usuario.setEmpregador(empregador);
     }
 }

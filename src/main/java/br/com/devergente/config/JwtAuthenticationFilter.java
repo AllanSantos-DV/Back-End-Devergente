@@ -31,11 +31,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) {
         if (routesToExclude.contains(request.getRequestURI())) {
-            System.out.println("Excluindo rota: --------------------------------------------------------------------------------" + request.getRequestURI());
             filterChain.doFilter(request, response);
             return;
         }
-        System.out.println("Não excluindo rota: ---------------------------------------------------------------------------------" + request.getRequestURI());
 
         String header = request.getHeader("Authorization");
 
