@@ -30,7 +30,7 @@ Você também pode rodar a aplicação via terminal na pasta raiz do projeto usa
 
 O servidor abrirá no localhost:8080 por padrão. Você pode usar um programa como o Postman ou Insomnia para testar os endpoints.
 
-O projeto não está completo e pode apresentar instabilidades. Foi ajustado um front-end para rodar com base na aplicação. Você pode acessar o projeto [aqui](https://www.docker.com/get-started/).
+O projeto não está completo e pode apresentar instabilidades. Foi ajustado um front-end para rodar com base na aplicação. Você pode acessar o projeto [aqui](https://github.com/AllanSantos-DV/Front-End-Devergente).
 
 ## Funções
 
