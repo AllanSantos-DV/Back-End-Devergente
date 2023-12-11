@@ -21,22 +21,17 @@ Para instalar o projeto, siga estas etapas:
 1. Clone o repositório para a sua máquina local.
 2. Abra o projeto usando o IntelliJ IDEA.
 3. Execute o método main na classe DeVerGenteApplication.
-#### opções vias docker:
-1. Localize o arquivo [compose.yaml](../compose.yaml) e descomente todas as linhas comentadas.
-2. Na pasta raiz do projeto digite o seguinte comando
-```
-docker compose up
-```
-3. A opção acima podera ser usada com a opção ```-d``` para poder liberar o console.
-
-exemplo: ``` docker compose up -d ```
-
-4. As portas estão definidas no arquivo:
-
-```
-Back-- 8080:8080
-Banco-- 5432:5432
-```
+### Opções vias docker:
+1. Clone o repositório para a sua máquina local.
+2. Localize o arquivo [compose.yaml](../compose.yaml) e descomente todas as linhas comentadas.
+3. Na pasta raiz do projeto digite o seguinte comando ``` docker compose up```
+4. A opção acima podera ser usada com a opção ```-d``` para poder liberar o console.
+   #### exemplo: ``` docker compose up -d ```
+5. As portas estão definidas no arquivo:
+    ```
+    Back-- 8080:8080
+    Banco-- 5432:5432
+    ```
 
 Lembre-se de que o Docker deve estar instalado e funcionando, pois o banco de dados será criado no Docker.
 
