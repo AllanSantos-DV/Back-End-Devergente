@@ -1,14 +1,13 @@
 package br.com.devergente.models;
 
 import br.com.devergente.models.usuarios.UsuarioDTO;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "postagem")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Postagem {
 
     @Id
@@ -34,10 +32,14 @@ public class Postagem {
     @Column(name = "imagem_url", columnDefinition = "varchar(255) default 'https://i.imgur.com/2ZtU6O2.png'")
     private String imagemUrl;
 
+    @Transient
+    private File image;
+
     // relacionamentos
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
+    @JsonManagedReference("usuario-postagem")
     private UsuarioDTO usuario;
 
     @OneToMany(mappedBy = "postagem")

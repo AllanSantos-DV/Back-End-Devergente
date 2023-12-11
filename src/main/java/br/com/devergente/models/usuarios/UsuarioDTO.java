@@ -4,8 +4,7 @@ package br.com.devergente.models.usuarios;
 import br.com.devergente.models.Comentario;
 import br.com.devergente.models.Curtida;
 import br.com.devergente.models.Postagem;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "usuarioDTO")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class UsuarioDTO {
 
     public UsuarioDTO(Integer id, String nome, String username, String img_perfil, String email) {
@@ -46,6 +44,7 @@ public class UsuarioDTO {
     private String email;
 
     @OneToMany(mappedBy = "usuario")
+    @JsonBackReference("usuario-postagem")
     private List<Postagem> postagens;
 
     @OneToMany(mappedBy = "usuario")

@@ -1,6 +1,7 @@
 package br.com.devergente.models.usuarios;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "professional")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Profissional {
 
     @Id
@@ -27,7 +29,6 @@ public class Profissional {
     @OneToOne
     @MapsId
     @JoinColumn(name = "id_usuario")
-    @JsonBackReference(value = "user-professional")
     private Usuario usuario;
 
     @Override

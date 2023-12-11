@@ -4,7 +4,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,18 +26,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.routesToExclude = Arrays.asList("/perfil", "/login");
     }
 
-    @SneakyThrows
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) {
         if (routesToExclude.contains(request.getRequestURI())) {
-            filterChain.doFilter(request, response);
+            filterChain(request, response, filterChain);
             return;
         }
-
         String header = request.getHeader("Authorization");
 
         if (header == null || !header.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
+            filterChain(request, response, filterChain);
             return;
         }
         String token = header.substring(7);
@@ -50,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             long diffInMillies = Math.abs(expirationDate.getTime() - now.getTime());
             long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
-            if (diff <= 5) {
+            if (diff <= 20) {
                 String newToken = jwtUtil.generateToken(email);
                 response.setHeader("Authorization", "Bearer " + newToken);
             }
@@ -58,6 +55,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        filterChain.doFilter(request, response);
+        filterChain(request, response, filterChain);
+    }
+
+    private void filterChain(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+        try {
+            filterChain.doFilter(request, response);
+        } catch (IOException | ServletException e) {
+            System.out.println("Token invalido, realize Login novamente. Erro ao filtrar a solicitação" + e.getMessage());
+        }
     }
 }

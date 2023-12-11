@@ -2,7 +2,6 @@ package br.com.devergente.models.usuarios;
 
 import br.com.devergente.models.Endereco;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -61,23 +60,18 @@ public class Usuario {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
-    @JsonManagedReference("user-endereco")
     private Endereco endereco;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference("user-neuro")
     private Neurodivergent neurodivergent;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference("user-familiar")
     private Familiar familiar;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference("user-profissional")
     private Profissional profissional;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference("user-empregador")
     private Empregador empregador;
 
     @Override

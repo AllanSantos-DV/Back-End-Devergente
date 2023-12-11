@@ -25,7 +25,6 @@ public class UserServices {
     public Usuario create(Usuario usuario) {
         if (usersRepository.findByEmail(usuario.getEmail()) != null) return null;
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-
         switch (EnunsUsers.values()[usuario.getTipo_perfil() - 1]) {
             case NEURODIVERGENTE -> createNeurodivergent(usuario);
             case FAMILIAR-> createFamiliar(usuario);
