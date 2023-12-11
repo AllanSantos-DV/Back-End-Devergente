@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 import java.util.Objects;
 
 public class S3Services {
-    public String uploadParaS3(MultipartFile file, String region, String bucketName, String folderName) {
+    public String uploadParaS3(MultipartFile file, String region, String bucketName, String folderName)  {
         AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
                 .withRegion(region)
                 .build();

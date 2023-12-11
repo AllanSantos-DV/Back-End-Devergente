@@ -3,11 +3,13 @@ package br.com.devergente.controllers;
 import br.com.devergente.config.JwtUtil;
 import br.com.devergente.models.Postagem;
 import br.com.devergente.services.PostagensServices;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -28,7 +30,7 @@ public class PostagensController {
 
     @PostMapping("/postagens")
     public ResponseEntity<Postagem> save(@RequestPart("conteudo") String conteudo,
-                                         @RequestPart("image") MultipartFile imagem,
+                                            @RequestPart("image") MultipartFile imagem,
                                          @RequestPart("data") String data,
                                          @RequestHeader("Authorization") String token) {
         System.out.println(conteudo);
