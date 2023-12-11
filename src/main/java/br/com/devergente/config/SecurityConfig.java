@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.net.ssl.HttpsURLConnection;
+
 @Configuration
 public class SecurityConfig {
     private final JwtUtil jwtUtil;
