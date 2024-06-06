@@ -1,6 +1,6 @@
 package br.com.devergente.services;
 
-import br.com.devergente.enuns.EnunsUsers;
+import br.com.devergente.enuns.EnumUsers;
 import br.com.devergente.models.usuarios.*;
 import br.com.devergente.repository.UsersDTORepository;
 import br.com.devergente.repository.UsersRepository;
@@ -25,7 +25,7 @@ public class UserServices {
     public Usuario create(Usuario usuario) {
         if (usersRepository.findByEmail(usuario.getEmail()) != null) return null;
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        switch (EnunsUsers.values()[usuario.getTipo_perfil() - 1]) {
+        switch (EnumUsers.values()[usuario.getTipo_perfil() - 1]) {
             case NEURODIVERGENTE -> createNeurodivergent(usuario);
             case FAMILIAR-> createFamiliar(usuario);
             case PROFISSIONAL-> createProfessional(usuario);

@@ -16,15 +16,17 @@ import java.util.List;
 @RequestMapping
 public class PostagensController {
 
-    @Autowired
-    private PostagensServices postagensServices;
+    private final PostagensServices postagensServices;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
+
+    public PostagensController(PostagensServices postagensServices, JwtUtil jwtUtil) {
+        this.postagensServices = postagensServices;
+        this.jwtUtil = jwtUtil;
+    }
 
     @GetMapping("/postagens/page={init}&size={quantity}")
     public ResponseEntity<List<Postagem>> findAll(@PathVariable int init, @PathVariable int quantity) {
-        System.out.println(init + " " + quantity + " -------------------------------------------------------------- ");
         return ResponseEntity.ok(postagensServices.findAll(init, quantity));
     }
 
@@ -33,11 +35,7 @@ public class PostagensController {
                                             @RequestPart("image") MultipartFile imagem,
                                          @RequestPart("data") String data,
                                          @RequestHeader("Authorization") String token) {
-        System.out.println(conteudo);
-        System.out.println(imagem);
-        System.out.println(data);
         String email = jwtUtil.getUsernameFromToken(token.substring(7));
-        System.out.println(email);
         return ResponseEntity.ok(postagensServices.save(conteudo, imagem, email));
     }
 

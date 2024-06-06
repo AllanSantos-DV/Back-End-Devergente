@@ -52,7 +52,6 @@ public class PostagensServices extends S3Services {
         // TODO document why this method is empty
     }
 
-
     public List<Postagem> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Postagem> postagens = postagensRepository.findAll(pageable);
